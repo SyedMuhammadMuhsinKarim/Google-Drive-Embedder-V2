@@ -12,10 +12,6 @@ export default class Video extends Component {
   }
 
   componentDidMount() {
-    // const options = {};
-
-    // console.log(this.state.video);
-
     const controls = [
       "play-large", // The large play button in the center
       "restart", // Restart playback
@@ -52,7 +48,7 @@ export default class Video extends Component {
     return (
       <React.Fragment>
         <Helmet>
-          <title>{res ? res.title : "Demo"}</title>
+          <title>{res ? res.title : "TNP Video Player"}</title>
         </Helmet>
 
         <div className="my-div shadow container">
@@ -62,16 +58,9 @@ export default class Video extends Component {
               className="embed-responsive-item my-player"
               controls
               playsinline
-              poster={res ? `https://drive.google.com/vt?id=${res.g_id}` : ""}
+              poster={res && `https://drive.google.com/vt?id=${res.g_id}`}
             >
-              <source
-                src={
-                  res
-                    ? res.g_down
-                    : "http://techslides.com/demos/sample-videos/small.mp4"
-                }
-                type={this.props.type ? this.props.type : "video/mp4"}
-              />
+              <source src={res && res.g_down} type="video/mp4" />
             </video>
           </div>
         </div>

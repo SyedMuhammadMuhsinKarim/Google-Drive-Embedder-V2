@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 // Use as Routes
 import GetLink from "./GetLink";
@@ -9,15 +9,17 @@ import Navigation from "./Components/Navbar";
 import Footer from "./Components/Footer";
 
 import * as ROUTES from "./constants/routes";
+import NotFound from "./Components/NotFoundPage";
 
 const App = () => (
   <Router>
     <Navigation />
     <br />
-    <div>
+    <Switch>
       <Route exact path={ROUTES.LANDING} component={GetLink} />
       <Route exact path={ROUTES.EMBED} component={GetDrive} />
-    </div>
+      <Route component={NotFound} />
+    </Switch>
     <br /> <br />
     <Footer />
   </Router>

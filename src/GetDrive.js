@@ -4,28 +4,34 @@ import Video from "./Components/Video";
 import image from "./Components/Form/719.gif";
 import { withServer } from "./Api/context";
 import dotenv from "dotenv";
+import { withRouter } from "react-router-dom";
+import NotFound from "./Components/NotFoundPage";
 dotenv.config();
+
+const INITIAL_STATE = {
+  loading: true,
+  error: undefined,
+  id: undefined,
+  my_res: undefined
+};
 
 class Drive extends Component {
   constructor() {
     super();
-    this.state = { loading: true };
+    this.state = { ...INITIAL_STATE };
   }
 
   componentDidMount() {
-    const path = this.props.match.params.id;
-    this.setState({ id: path });
     this.fetchingData();
   }
 
   fetchingData() {
-    const { id } = this.state;
     this.props.server
-      .getLinkWithId(id)
-      .then(response =>
+      .getLinkWithId(this.props.match.params.id)
+      .then((response) =>
         this.setState({ my_res: response.data, loading: false })
       )
-      .catch(error => this.setState({ error, loading: false }));
+      .catch((error) => this.setState({ error, loading: false }));
   }
 
   render() {
@@ -44,11 +50,11 @@ class Drive extends Component {
         ) : my_res ? (
           <Video video={my_res} />
         ) : (
-          <h3>404 Page Error: Lagta hai aap bhatak gaye ho rasta.</h3>
+          <NotFound />
         )}
       </>
     );
   }
 }
 
-export default withServer(Drive);
+export default withRouter(withServer(Drive));
